@@ -29,7 +29,7 @@ func set_sizes(value: Array[Vector2]) -> void:
 
 
 func _get_sizes_strings() -> PackedStringArray:
-	var sizes_strings: PackedStringArray
+	var sizes_strings: PackedStringArray = PackedStringArray()
 	for size in sizes:
 		var formatted_size: String = str(size).trim_prefix("(").trim_suffix(")").replace(",", " x")
 		sizes_strings.append(formatted_size)
