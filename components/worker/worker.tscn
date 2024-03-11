@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://duw2847rllq6u"]
+
+[ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="1_wlfsu"]
+[ext_resource type="Script" path="res://components/worker/worker.gd" id="1_wtli4"]
+[ext_resource type="Script" path="res://components/worker/worker_body_2d.gd" id="2_kpn7y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7jyv"]
+size = Vector2(80, 80)
+
+[node name="Worker" type="Node"]
+script = ExtResource("1_wtli4")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+unique_name_in_owner = true
+floor_constant_speed = true
+script = ExtResource("2_kpn7y")
+
+[node name="ColorRect" type="ColorRect" parent="CharacterBody2D"]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(40, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_x7jyv")
+
+[node name="VisionCone2D" parent="CharacterBody2D" instance=ExtResource("1_wlfsu")]
+angle_deg = 45
+ray_count = 10
+max_distance = 475.0
+
+[node name="Path2D" type="Path2D" parent="."]
+unique_name_in_owner = true
+
+[connection signal="body_entered" from="CharacterBody2D/VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_entered"]
+[connection signal="body_exited" from="CharacterBody2D/VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_exited"]
+
+[editable path="CharacterBody2D/VisionCone2D"]

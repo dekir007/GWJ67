@@ -1,10 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://cy0solflais86"]
+[gd_scene load_steps=3 format=3 uid="uid://cy0solflais86"]
 
-[sub_resource type="Curve2D" id="Curve2D_j3wgv"]
+[ext_resource type="PackedScene" uid="uid://duw2847rllq6u" path="res://components/worker/worker.tscn" id="1_um43x"]
+
+[sub_resource type="Curve2D" id="Curve2D_loop8"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 720, 80, 0, 0, 0, 0, 720, 240, 0, 0, 0, 0, 880, 240, 0, 0, 0, 0, 880, 160, 0, 0, 0, 0, 880, 240, 0, 0, 0, 0, 2000, 240, 0, 0, 0, 0, 2000, 1200, 0, 0, 0, 0, 2480, 1200, 0, 0, 0, 0, 2480, 1360, 0, 0, 0, 0, 1280, 1360, 0, 0, 0, 0, 1280, 1440, 0, 0, 0, 0, 1280, 1360, 0, 0, 0, 0, 880, 1360, 0, 0, 0, 0, 880, 240, 0, 0, 0, 0, 720, 240, 0, 0, 0, 0, 720, 80)
+"points": PackedVector2Array(0, 0, 0, 0, 120, 120, 0, 0, 0, 0, 120, 200, 0, 0, 0, 0, 280, 200, 0, 0, 0, 0, 280, 360, 0, 0, 0, 0, 440, 360, 0, 0, 0, 0, 440, 40)
 }
-point_count = 16
+point_count = 6
 
 [node name="Office" type="Node2D"]
 
@@ -33,13 +35,13 @@ offset_right = 2720.0
 offset_bottom = 1450.0
 color = Color(0, 0, 0, 1)
 
-[node name="Worker" type="Node2D" parent="."]
+[node name="Worker" parent="." instance=ExtResource("1_um43x")]
 
-[node name="ColorRect" type="ColorRect" parent="Worker"]
-offset_left = 680.0
-offset_top = 40.0
-offset_right = 760.0
-offset_bottom = 120.0
+[node name="CharacterBody2D" parent="Worker" index="0"]
+position = Vector2(120, 40)
 
-[node name="Path2D" type="Path2D" parent="Worker"]
-curve = SubResource("Curve2D_j3wgv")
+[node name="Path2D" parent="Worker" index="1"]
+curve = SubResource("Curve2D_loop8")
+
+[editable path="Worker"]
+[editable path="Worker/CharacterBody2D/VisionCone2D"]
