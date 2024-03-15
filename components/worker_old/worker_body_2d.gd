@@ -18,10 +18,10 @@ func _physics_process(_delta):
 		_rotate(direction)
 		move_and_slide()
 	else:
-		position = destination_position
+		global_position = destination_position
 
 func _difference_more_than_delta() -> bool:
-	return abs(destination_position.x - position.x) >= DELTA or abs(destination_position.y - position.y) >= DELTA
+	return abs(destination_position.x - global_position.x) >= DELTA or abs(destination_position.y - global_position.y) >= DELTA
 
 func _rotate(direction: Vector2):
 	match direction:
@@ -33,3 +33,6 @@ func _rotate(direction: Vector2):
 			rotation_degrees = 90
 		Vector2(1,0):
 			rotation_degrees = -90
+		_:
+			rotation = direction.angle() - 90
+			print(rotation)

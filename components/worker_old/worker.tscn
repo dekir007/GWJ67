@@ -1,17 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://duw2847rllq6u"]
+[gd_scene load_steps=8 format=3 uid="uid://duw2847rllq6u"]
 
 [ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="1_wlfsu"]
-[ext_resource type="Script" path="res://components/worker/worker.gd" id="1_wtli4"]
-[ext_resource type="Script" path="res://components/worker/worker_body_2d.gd" id="2_kpn7y"]
+[ext_resource type="Script" path="res://components/worker_old/worker.gd" id="1_wtli4"]
+[ext_resource type="Script" path="res://components/worker_old/worker_body_2d.gd" id="2_kpn7y"]
+[ext_resource type="BehaviorTree" uid="uid://c5h5sy0p2u0nk" path="res://components/ai/trees/worker_tree.tres" id="4_ifq2c"]
+[ext_resource type="BlackboardPlan" uid="uid://cuo1kkdm7tbeq" path="res://components/worker_old/old_worker_blackboard.tres" id="5_c5qc1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7jyv"]
 size = Vector2(80, 80)
+
+[sub_resource type="GDScript" id="GDScript_07t0t"]
+script/source = "extends BTPlayer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	owner = $\"..\"
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [node name="Worker" type="Node"]
 script = ExtResource("1_wtli4")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
+rotation = -1.5708
 floor_constant_speed = true
 script = ExtResource("2_kpn7y")
 
@@ -32,6 +50,12 @@ max_distance = 475.0
 
 [node name="Path2D" type="Path2D" parent="."]
 unique_name_in_owner = true
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("4_ifq2c")
+blackboard_plan = ExtResource("5_c5qc1")
+monitor_performance = true
+script = SubResource("GDScript_07t0t")
 
 [connection signal="body_entered" from="CharacterBody2D/VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_entered"]
 [connection signal="body_exited" from="CharacterBody2D/VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_exited"]

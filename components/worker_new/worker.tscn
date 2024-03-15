@@ -1,0 +1,99 @@
+[gd_scene load_steps=14 format=3 uid="uid://baqto3jnkd6mc"]
+
+[ext_resource type="Script" path="res://components/worker_new/worker.gd" id="1_u5bpl"]
+[ext_resource type="BehaviorTree" uid="uid://c5h5sy0p2u0nk" path="res://components/ai/trees/worker_tree.tres" id="2_tgga0"]
+[ext_resource type="BlackboardPlan" uid="uid://pgm21d643uqk" path="res://components/worker_new/new_worker_blackboard.tres" id="3_y7v5w"]
+
+[sub_resource type="Gradient" id="Gradient_nc77d"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_on31x"]
+gradient = SubResource("Gradient_nc77d")
+
+[sub_resource type="GDScript" id="GDScript_06ga6"]
+script/source = "extends BTPlayer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	owner = $\"..\"
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5sxs6"]
+radius = 33.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xwu5j"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 0.4
+
+[sub_resource type="Gradient" id="Gradient_3ti0b"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.641934, 0.641934, 0.641934, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3vg1t"]
+gradient = SubResource("Gradient_3ti0b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_72bkl"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 0.4
+
+[sub_resource type="Gradient" id="Gradient_3631r"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 0.452452, 0.286826, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b3wje"]
+gradient = SubResource("Gradient_3631r")
+
+[node name="Worker" type="CharacterBody2D"]
+script = ExtResource("1_u5bpl")
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(2, 3.8147e-06)
+scale = Vector2(0.226563, 57.5)
+texture = SubResource("GradientTexture1D_on31x")
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("2_tgga0")
+blackboard_plan = ExtResource("3_y7v5w")
+monitor_performance = true
+script = SubResource("GDScript_06ga6")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+target_desired_distance = 25.0
+avoidance_enabled = true
+radius = 45.0
+max_speed = 300.0
+debug_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5sxs6")
+
+[node name="IdleParticles" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_xwu5j")
+texture = SubResource("GradientTexture2D_3vg1t")
+
+[node name="WorkParticles" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_72bkl")
+texture = SubResource("GradientTexture2D_b3wje")
+
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
