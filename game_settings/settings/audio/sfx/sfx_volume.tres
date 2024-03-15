@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dku3renwcr3gm"]
+
+[ext_resource type="Script" path="res://game_settings/templates/audio/audio_volume.gd" id="1_rliv0"]
+
+[resource]
+resource_name = "sfx_sfx_volume"
+script = ExtResource("1_rliv0")
+audio_bus = "SFX"
+current = 80.0
+default = 80.0
+name = "sfx_sfx_volume"
+category = "audio"
+value_type = 3
+value_hint = 1
+value_hint_string = "0,100"

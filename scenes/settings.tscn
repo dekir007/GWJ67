@@ -1,0 +1,232 @@
+[gd_scene load_steps=23 format=3 uid="uid://hx6xbc7rjp44"]
+
+[ext_resource type="PackedScene" uid="uid://cha8xesfthpfk" path="res://game_settings/components/switch/switch.tscn" id="1_tm65q"]
+[ext_resource type="Resource" uid="uid://b35bfoof7054g" path="res://game_settings/settings/display/display_fullscreen.tres" id="2_7u2hm"]
+[ext_resource type="PackedScene" uid="uid://b7m6l0lvojrsj" path="res://game_settings/components/option_list/option_list.tscn" id="3_k1c3i"]
+[ext_resource type="Resource" uid="uid://fnb7sq1fjr8l" path="res://game_settings/settings/display/display_size.tres" id="4_k8co2"]
+[ext_resource type="Theme" uid="uid://2643a6p0thsb" path="res://assets/themes/option_menu_theme.tres" id="5_6f1eb"]
+[ext_resource type="StyleBox" uid="uid://c3nl2fr2yle2k" path="res://assets/styles/blue_button.tres" id="6_d3kcq"]
+[ext_resource type="StyleBox" uid="uid://sj4sw626k6fa" path="res://assets/styles/hover_button.tres" id="7_5limr"]
+[ext_resource type="StyleBox" uid="uid://dd5xkjppnprpd" path="res://assets/styles/pressed_button.tres" id="8_80w2f"]
+[ext_resource type="PackedScene" uid="uid://bhkyf3l4ee800" path="res://game_settings/components/checkbox/checkbox.tscn" id="9_oug5w"]
+[ext_resource type="Resource" uid="uid://ctj8fmlc78or7" path="res://game_settings/settings/audio/master/master_mute.tres" id="10_wsflw"]
+[ext_resource type="PackedScene" uid="uid://ds06mwhee8ygm" path="res://game_settings/components/slider/slider.tscn" id="11_amiby"]
+[ext_resource type="Resource" uid="uid://dewdfipgwx373" path="res://game_settings/settings/audio/master/master_volume.tres" id="12_prkfy"]
+[ext_resource type="Resource" uid="uid://begwc0yil8iu7" path="res://game_settings/settings/audio/music/music_mute.tres" id="13_bh71u"]
+[ext_resource type="Resource" uid="uid://dnwmv7eq7bpp8" path="res://game_settings/settings/audio/music/music_volume.tres" id="14_ndk03"]
+[ext_resource type="Resource" uid="uid://bkib0jw6uw8m1" path="res://game_settings/settings/audio/sfx/sfx_mute.tres" id="15_g43xo"]
+[ext_resource type="Resource" uid="uid://dku3renwcr3gm" path="res://game_settings/settings/audio/sfx/sfx_volume.tres" id="16_uupyw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jf5b"]
+bg_color = Color(0.592157, 0.713726, 0.878431, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.882353, 0.898039, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_oq05c"]
+font_size = 32
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m6dwy"]
+
+[sub_resource type="Theme" id="Theme_erauo"]
+CheckButton/styles/focus = SubResource("StyleBoxEmpty_m6dwy")
+CheckButton/styles/hover = ExtResource("7_5limr")
+CheckButton/styles/hover_pressed = ExtResource("8_80w2f")
+CheckButton/styles/normal = ExtResource("6_d3kcq")
+CheckButton/styles/pressed = ExtResource("8_80w2f")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xasp3"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_vyv73"]
+color = Color(0.960784, 0.992157, 0, 1)
+thickness = 3
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.1
+anchor_right = 0.8
+anchor_bottom = 0.9
+offset_left = -22.0
+offset_top = -20.0
+offset_right = 22.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2jf5b")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Fullscreen" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FullscreenLabel" type="Label" parent="Background/MarginContainer/VBoxContainer/Fullscreen"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Fullscreen"
+label_settings = SubResource("LabelSettings_oq05c")
+
+[node name="Switch" parent="Background/MarginContainer/VBoxContainer/Fullscreen" groups=["settings"] instance=ExtResource("1_tm65q")]
+layout_mode = 2
+theme = SubResource("Theme_erauo")
+setting = ExtResource("2_7u2hm")
+apply_on_change = true
+grab_focus_on_mouse_over = true
+
+[node name="WindowSize" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="WindowSizeLabel" type="Label" parent="Background/MarginContainer/VBoxContainer/WindowSize"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Window Size"
+label_settings = SubResource("LabelSettings_oq05c")
+
+[node name="OptionList" parent="Background/MarginContainer/VBoxContainer/WindowSize" instance=ExtResource("3_k1c3i")]
+layout_mode = 2
+use_ids = true
+setting = ExtResource("4_k8co2")
+apply_on_change = true
+grab_focus_on_mouse_over = true
+
+[node name="Btn" parent="Background/MarginContainer/VBoxContainer/WindowSize/OptionList" index="0"]
+theme = ExtResource("5_6f1eb")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xasp3")
+theme_override_styles/normal = ExtResource("6_d3kcq")
+theme_override_styles/hover = ExtResource("7_5limr")
+theme_override_styles/pressed = ExtResource("8_80w2f")
+item_count = 4
+popup/item_0/text = "1280x720"
+popup/item_0/id = 0
+popup/item_1/text = "1920x1080"
+popup/item_1/id = 1
+popup/item_2/text = "2560x1440"
+popup/item_2/id = 2
+popup/item_3/text = "3840x2160"
+popup/item_3/id = 3
+
+[node name="HSeparator" type="HSeparator" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_vyv73")
+
+[node name="Master" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MasterLabel" type="Label" parent="Background/MarginContainer/VBoxContainer/Master"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master Mute|Volume"
+label_settings = SubResource("LabelSettings_oq05c")
+
+[node name="MuteCheckbox" parent="Background/MarginContainer/VBoxContainer/Master" instance=ExtResource("9_oug5w")]
+layout_mode = 2
+setting = ExtResource("10_wsflw")
+apply_on_change = true
+grab_focus_on_mouse_over = true
+
+[node name="VolumeSlider" parent="Background/MarginContainer/VBoxContainer/Master" instance=ExtResource("11_amiby")]
+layout_mode = 2
+size_flags_horizontal = 3
+setting = ExtResource("12_prkfy")
+apply_on_change = true
+grab_focus_on_mouse_over = true
+
+[node name="Slider" parent="Background/MarginContainer/VBoxContainer/Master/VolumeSlider" index="0"]
+size_flags_horizontal = 1
+
+[node name="Music" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MusicLabel" type="Label" parent="Background/MarginContainer/VBoxContainer/Music"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Mute|Volume"
+label_settings = SubResource("LabelSettings_oq05c")
+
+[node name="MuteCheckbox" parent="Background/MarginContainer/VBoxContainer/Music" instance=ExtResource("9_oug5w")]
+layout_mode = 2
+setting = ExtResource("13_bh71u")
+apply_on_change = true
+grab_focus_on_mouse_over = true
+
+[node name="VolumeSlider" parent="Background/MarginContainer/VBoxContainer/Music" instance=ExtResource("11_amiby")]
+layout_mode = 2
+size_flags_horizontal = 3
+setting = ExtResource("14_ndk03")
+apply_on_change = true
+grab_focus_on_mouse_over = true
+
+[node name="Slider" parent="Background/MarginContainer/VBoxContainer/Music/VolumeSlider" index="0"]
+size_flags_horizontal = 1
+
+[node name="SFX" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SFXLabel" type="Label" parent="Background/MarginContainer/VBoxContainer/SFX"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SFX Mute|Volume"
+label_settings = SubResource("LabelSettings_oq05c")
+
+[node name="MuteCheckbox" parent="Background/MarginContainer/VBoxContainer/SFX" instance=ExtResource("9_oug5w")]
+layout_mode = 2
+setting = ExtResource("15_g43xo")
+apply_on_change = true
+grab_focus_on_mouse_over = true
+
+[node name="VolumeSlider" parent="Background/MarginContainer/VBoxContainer/SFX" instance=ExtResource("11_amiby")]
+layout_mode = 2
+size_flags_horizontal = 3
+setting = ExtResource("16_uupyw")
+apply_on_change = true
+grab_focus_on_mouse_over = true
+
+[node name="Slider" parent="Background/MarginContainer/VBoxContainer/SFX/VolumeSlider" index="0"]
+size_flags_horizontal = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_vyv73")
+
+[editable path="Background/MarginContainer/VBoxContainer/WindowSize/OptionList"]
+[editable path="Background/MarginContainer/VBoxContainer/Master/MuteCheckbox"]
+[editable path="Background/MarginContainer/VBoxContainer/Master/VolumeSlider"]
+[editable path="Background/MarginContainer/VBoxContainer/Music/VolumeSlider"]
+[editable path="Background/MarginContainer/VBoxContainer/SFX/VolumeSlider"]
