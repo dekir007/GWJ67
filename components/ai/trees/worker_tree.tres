@@ -3,16 +3,16 @@
 [ext_resource type="Script" path="res://components/ai/tasks/get_worker_task.gd" id="1_vry42"]
 [ext_resource type="Script" path="res://components/ai/tasks/DoWork.gd" id="2_dt40x"]
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_6is6m"]
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_fkq2v"]
 var/tasks/name = "tasks"
-var/tasks/type = 28
-var/tasks/value = []
+var/tasks/type = 27
+var/tasks/value = {}
 var/tasks/hint = 0
 var/tasks/hint_string = ""
 var/vending_machines/name = "vending_machines"
 var/vending_machines/type = 5
 var/vending_machines/value = Vector2(1000, 250)
-var/vending_machines/hint = 1
+var/vending_machines/hint = 0
 var/vending_machines/hint_string = ""
 var/sss/name = "sss"
 var/sss/type = 3
@@ -161,5 +161,5 @@ children = [SubResource("BTCooldown_ecymx"), SubResource("BTComment_ujf4a"), Sub
 children = [SubResource("BTRunLimit_fkahk"), SubResource("BTSequence_bredg"), SubResource("BTSelector_g6fpf")]
 
 [resource]
-blackboard_plan = SubResource("BlackboardPlan_6is6m")
+blackboard_plan = SubResource("BlackboardPlan_fkq2v")
 root_task = SubResource("BTSelector_jhpqw")

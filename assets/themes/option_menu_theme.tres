@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=3 format=3 uid="uid://2643a6p0thsb"]
 
-[ext_resource type="StyleBox" uid="uid://sj4sw626k6fa" path="res://Assets/Styles/hover_button.tres" id="1_nexmq"]
+[ext_resource type="StyleBox" uid="uid://sj4sw626k6fa" path="res://assets/styles/hover_button.tres" id="1_nexmq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f41d7"]
 content_margin_left = 25.0

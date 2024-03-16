@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://4fijrs5sh1v7"]
+
+[ext_resource type="Script" path="res://components/player_controller/boss.gd" id="1_bsyqj"]
+
+[sub_resource type="Gradient" id="Gradient_vpbck"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_60af4"]
+gradient = SubResource("Gradient_vpbck")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gcgms"]
+radius = 36.3456
+
+[node name="Boss" type="CharacterBody2D" groups=["player"]]
+motion_mode = 1
+wall_min_slide_angle = 0.523599
+script = ExtResource("1_bsyqj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_60af4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gcgms")
+
+[node name="Camera2D" type="Camera2D" parent="."]

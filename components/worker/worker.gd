@@ -42,6 +42,6 @@ func emit_work(e:bool):
 	work_particles.emitting = e
 
 func _on_navigation_agent_2d_target_reached() -> void:
-	print("reached")
+	#print("reached")
 	is_nav = false
 	pass # Replace with function body.

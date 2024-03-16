@@ -1,8 +1,8 @@
 extends Resource
 class_name WorkTask
 
-enum TaskTypes { Computer }
+enum TaskTypes { FillOutPapers, ProjectPlanning, OfficeErrands, TeamMeeting }
 
 @export var type: TaskTypes
-@export var position : Vector2
 @export var duration : float
+@export var cost : float

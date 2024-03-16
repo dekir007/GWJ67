@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=3 uid="uid://baqto3jnkd6mc"]
 
-[ext_resource type="Script" path="res://components/worker_new/worker.gd" id="1_u5bpl"]
+[ext_resource type="Script" path="res://components/worker/worker.gd" id="1_u5bpl"]
 [ext_resource type="BehaviorTree" uid="uid://c5h5sy0p2u0nk" path="res://components/ai/trees/worker_tree.tres" id="2_tgga0"]
-[ext_resource type="BlackboardPlan" uid="uid://pgm21d643uqk" path="res://components/worker_new/new_worker_blackboard.tres" id="3_y7v5w"]
+[ext_resource type="BlackboardPlan" uid="uid://pgm21d643uqk" path="res://components/worker/worker_blackboard.tres" id="3_y7v5w"]
 
 [sub_resource type="Gradient" id="Gradient_nc77d"]
 offsets = PackedFloat32Array(0)
@@ -61,7 +61,7 @@ colors = PackedColorArray(1, 0.452452, 0.286826, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_b3wje"]
 gradient = SubResource("Gradient_3631r")
 
-[node name="Worker" type="CharacterBody2D"]
+[node name="Worker" type="CharacterBody2D" groups=["worker"]]
 script = ExtResource("1_u5bpl")
 
 [node name="Body" type="Sprite2D" parent="."]

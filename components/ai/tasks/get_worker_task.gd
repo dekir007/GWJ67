@@ -8,6 +8,8 @@ func _generate_name() -> String:
 
 # Called to initialize the task.
 func _setup() -> void:
+	var t : Dictionary = blackboard.get_var("tasks")
+	t[agent.name] = []
 	pass
 
 
@@ -23,8 +25,8 @@ func _exit() -> void:
 
 # Called each time this task is ticked (aka executed).
 func _tick(_delta: float) -> Status:
-	var tasks = blackboard.get_var("tasks", null)
-	if tasks == null or tasks.size() == 0:
+	var tasks : Dictionary = blackboard.get_var("tasks", null)
+	if tasks == null or (agent.name not in tasks) or tasks[agent.name].size() == 0:
 		return FAILURE
 	if "tasks" not in agent:
 		push_error("no tasks var in agent")

@@ -2,14 +2,14 @@
 
 [resource]
 var/tasks/name = "tasks"
-var/tasks/type = 28
-var/tasks/value = [5, 7, 15]
+var/tasks/type = 27
+var/tasks/value = {}
 var/tasks/hint = 0
 var/tasks/hint_string = ""
 var/vending_machines/name = "vending_machines"
 var/vending_machines/type = 5
 var/vending_machines/value = Vector2(1000, 250)
-var/vending_machines/hint = 1
+var/vending_machines/hint = 0
 var/vending_machines/hint_string = ""
 var/sss/name = "sss"
 var/sss/type = 3

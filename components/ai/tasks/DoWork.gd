@@ -15,9 +15,9 @@ func _setup() -> void:
 
 # Called when the task is entered.
 func _enter() -> void:
-	var tasks : Array = blackboard.get_var("tasks")
-	cur_task = tasks[0]
-	tasks.remove_at(0)
+	var tasks : Dictionary = blackboard.get_var("tasks")
+	cur_task = tasks[agent.name][0]
+	tasks[agent.name].remove_at(0)
 	pass
 
 
@@ -28,10 +28,10 @@ func _exit() -> void:
 
 # Called each time this task is ticked (aka executed).
 func _tick(_delta: float) -> Status:
-	if cur_task > 0:
-		cur_task -= 1
-		print(cur_task)
-		return RUNNING
+	#if cur_task > 0:
+		#cur_task -= 1
+		#print(cur_task)
+		#return RUNNING
 	
 	return SUCCESS
 

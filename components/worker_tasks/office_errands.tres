@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WorkTask" load_steps=2 format=3 uid="uid://b2ialuikfdmt6"]
+
+[ext_resource type="Script" path="res://scripts/work_task.gd" id="1_w6xn8"]
+
+[resource]
+script = ExtResource("1_w6xn8")
+type = 2
+duration = 60.0
+cost = 0.25
