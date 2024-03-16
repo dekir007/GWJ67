@@ -9,7 +9,8 @@ func _generate_name() -> String:
 # Called to initialize the task.
 func _setup() -> void:
 	var t : Dictionary = blackboard.get_var("tasks")
-	t[agent.name] = []
+	if agent.name not in t:
+		t[agent.name] = []
 	pass
 
 

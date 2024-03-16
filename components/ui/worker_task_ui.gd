@@ -1,6 +1,8 @@
 @tool
 extends PanelContainer
 
+signal assigned(task_resource)
+
 @export var task : WorkTask
 
 @onready var header: Label = %Header
@@ -12,8 +14,8 @@ extends PanelContainer
 func _ready() -> void:
 	if task == null:
 		return
-	var names = WorkTask.TaskTypes.keys()
-	header.text = names[task.type]
+	#var names = WorkTask.TaskTypes.keys()
+	header.text = task.name#names[task.type]
 	duration.text = "Takes time: " + str(task.duration) + " seconds"
 	cost.text = "Costs : " + str(task.cost) + " of a cup of coffee"
 	
@@ -24,7 +26,6 @@ func _ready() -> void:
 	
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _on_assign_button_up() -> void:
+	assigned.emit(task)
+	pass # Replace with function body.

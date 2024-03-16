@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cy0solflais86"]
+[gd_scene load_steps=7 format=3 uid="uid://cy0solflais86"]
 
 [ext_resource type="Script" path="res://scenes/office.gd" id="1_08e7y"]
 [ext_resource type="PackedScene" uid="uid://baqto3jnkd6mc" path="res://components/worker/worker.tscn" id="2_e4wkf"]
 [ext_resource type="PackedScene" uid="uid://4fijrs5sh1v7" path="res://components/player_controller/boss.tscn" id="3_1ximq"]
-[ext_resource type="PackedScene" uid="uid://c0jd7m4whx758" path="res://components/ui/tasks_distribution.tscn" id="4_e5gba"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_blddo"]
 vertices = PackedVector2Array(5557, 917, 5564, 1934, 4683, 1934, 4586, 917, 41, 167, 40, 40, 1391, 36, 680, 167, 1391, 2294, 680, 1271, 49, 2761, 45, 1271, 4683, 2850, 4059, 2294, 4059, 27, 4586, 26)
@@ -98,7 +97,3 @@ wall_min_slide_angle = 0.523599
 
 [node name="Boss" parent="." instance=ExtResource("3_1ximq")]
 position = Vector2(919, 714)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ScrollContainer" parent="CanvasLayer" instance=ExtResource("4_e5gba")]

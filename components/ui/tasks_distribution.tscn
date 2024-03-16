@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c0jd7m4whx758"]
+[gd_scene load_steps=18 format=3 uid="uid://c0jd7m4whx758"]
 
 [ext_resource type="Script" path="res://components/ui/tasks_distribution.gd" id="1_el5sh"]
 [ext_resource type="Theme" uid="uid://2643a6p0thsb" path="res://assets/themes/option_menu_theme.tres" id="1_odiv1"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://cxaohvlgbeigt" path="res://components/worker_tasks/team_meeting.tres" id="4_3n77e"]
 [ext_resource type="StyleBox" uid="uid://dd5xkjppnprpd" path="res://assets/styles/pressed_button.tres" id="4_6f2pg"]
 [ext_resource type="StyleBox" uid="uid://bv1o2ciq0ndps" path="res://assets/styles/white_back_red_borders.tres" id="6_e54wr"]
+[ext_resource type="FontFile" uid="uid://dqayh6vu7wext" path="res://assets/fonts/Boxfont Round.ttf" id="11_x5yw7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vyace"]
 bg_color = Color(0.788235, 0.854902, 0.913725, 1)
@@ -19,7 +20,7 @@ corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_p6l23"]
-font_size = 64
+font_size = 50
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
@@ -30,12 +31,25 @@ font_size = 32
 outline_size = 6
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6qsqy"]
+content_margin_left = 15.0
+content_margin_top = 10.0
+content_margin_right = 15.0
+content_margin_bottom = 10.0
+bg_color = Color(0.827451, 0.101961, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mm367"]
+
 [node name="TasksDistribution" type="PanelContainer"]
 anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.05
-anchor_right = 0.95
-anchor_bottom = 0.95
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vyace")
@@ -52,7 +66,7 @@ theme_override_constants/margin_bottom = 15
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
-theme_override_constants/separation = 15
+theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -87,7 +101,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = ExtResource("6_e54wr")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
-custom_minimum_size = Vector2(300, 200)
+custom_minimum_size = Vector2(300, 150)
 layout_mode = 2
 
 [node name="WorkerCurrentTasks" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/ScrollContainer"]
@@ -105,26 +119,42 @@ autowrap_mode = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.9
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="Tasks" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_constants/separation = 25
 
-[node name="WorkerTaskUI" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("1_w0e8d")]
+[node name="Task1" parent="MarginContainer/VBoxContainer/ScrollContainer/Tasks" instance=ExtResource("1_w0e8d")]
 layout_mode = 2
 
-[node name="WorkerTaskUI2" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("1_w0e8d")]
+[node name="Task2" parent="MarginContainer/VBoxContainer/ScrollContainer/Tasks" instance=ExtResource("1_w0e8d")]
 layout_mode = 2
 task = ExtResource("2_c0c1i")
 
-[node name="WorkerTaskUI3" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("1_w0e8d")]
+[node name="Task3" parent="MarginContainer/VBoxContainer/ScrollContainer/Tasks" instance=ExtResource("1_w0e8d")]
 layout_mode = 2
 task = ExtResource("3_uhn20")
 
-[node name="WorkerTaskUI4" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("1_w0e8d")]
+[node name="Task4" parent="MarginContainer/VBoxContainer/ScrollContainer/Tasks" instance=ExtResource("1_w0e8d")]
 layout_mode = 2
 task = ExtResource("4_3n77e")
 
+[node name="HideButton" type="Button" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_x5yw7")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_6qsqy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6qsqy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6qsqy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mm367")
+text = "X"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/HBoxContainer/WorkerSelection" to="." method="_on_worker_selection_item_selected"]
+[connection signal="button_up" from="MarginContainer/HideButton" to="." method="_on_hide_button_button_up"]

@@ -1,6 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://4fijrs5sh1v7"]
+[gd_scene load_steps=12 format=3 uid="uid://4fijrs5sh1v7"]
 
 [ext_resource type="Script" path="res://components/player_controller/boss.gd" id="1_bsyqj"]
+[ext_resource type="PackedScene" uid="uid://c0jd7m4whx758" path="res://components/ui/tasks_distribution.tscn" id="2_57cfs"]
+[ext_resource type="Script" path="res://components/player_controller/HUD.gd" id="2_q8mgj"]
+[ext_resource type="StyleBox" uid="uid://c3nl2fr2yle2k" path="res://assets/styles/blue_button.tres" id="3_b13ob"]
+[ext_resource type="StyleBox" uid="uid://sj4sw626k6fa" path="res://assets/styles/hover_button.tres" id="4_raihg"]
+[ext_resource type="StyleBox" uid="uid://dd5xkjppnprpd" path="res://assets/styles/pressed_button.tres" id="5_2ju6m"]
 
 [sub_resource type="Gradient" id="Gradient_vpbck"]
 
@@ -9,6 +14,13 @@ gradient = SubResource("Gradient_vpbck")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gcgms"]
 radius = 36.3456
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nvtxh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_my4sy"]
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Boss" type="CharacterBody2D" groups=["player"]]
 motion_mode = 1
@@ -22,3 +34,57 @@ texture = SubResource("GradientTexture2D_60af4")
 shape = SubResource("CircleShape2D_gcgms")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("2_q8mgj")
+
+[node name="TasksDistribution" parent="HUD" instance=ExtResource("2_57cfs")]
+visible = false
+
+[node name="StartDistr" type="Button" parent="HUD" groups=["ui_hide"]]
+anchors_preset = -1
+anchor_left = 0.01
+anchor_top = 0.98
+anchor_right = 0.01
+anchor_bottom = 0.98
+offset_top = -64.0
+offset_right = 233.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("3_b13ob")
+theme_override_styles/hover = ExtResource("4_raihg")
+theme_override_styles/pressed = ExtResource("5_2ju6m")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nvtxh")
+text = "Distribute tasks"
+
+[node name="PlayMinigames" type="Button" parent="HUD" groups=["ui_hide"]]
+anchors_preset = -1
+anchor_left = 0.99
+anchor_top = 0.98
+anchor_right = 0.99
+anchor_bottom = 0.98
+offset_left = -254.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("3_b13ob")
+theme_override_styles/hover = ExtResource("4_raihg")
+theme_override_styles/pressed = ExtResource("5_2ju6m")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nvtxh")
+text = "Play games"
+
+[node name="ScoreLabel" type="Label" parent="HUD"]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_left = 0.99
+anchor_top = 0.01
+anchor_right = 1.0
+anchor_bottom = 0.01
+offset_left = -100.0
+offset_bottom = 42.0
+grow_horizontal = 0
+text = "Score: 21212"
+label_settings = SubResource("LabelSettings_my4sy")
+
+[connection signal="pressed" from="HUD/StartDistr" to="HUD" method="_on_start_distr_pressed"]

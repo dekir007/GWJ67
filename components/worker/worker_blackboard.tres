@@ -1,9 +1,14 @@
-[gd_resource type="BlackboardPlan" format=3 uid="uid://pgm21d643uqk"]
+[gd_resource type="BlackboardPlan" load_steps=3 format=3 uid="uid://pgm21d643uqk"]
+
+[ext_resource type="Resource" uid="uid://cgxyo48x3kijf" path="res://components/worker_tasks/fill_out_papers.tres" id="1_5gawc"]
+[ext_resource type="Resource" uid="uid://b2ialuikfdmt6" path="res://components/worker_tasks/office_errands.tres" id="2_trnn4"]
 
 [resource]
 var/tasks/name = "tasks"
 var/tasks/type = 27
-var/tasks/value = {}
+var/tasks/value = {
+"Arthur": [ExtResource("1_5gawc"), ExtResource("2_trnn4")]
+}
 var/tasks/hint = 0
 var/tasks/hint_string = ""
 var/vending_machines/name = "vending_machines"
