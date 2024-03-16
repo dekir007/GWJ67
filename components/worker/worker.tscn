@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://baqto3jnkd6mc"]
+[gd_scene load_steps=17 format=3 uid="uid://baqto3jnkd6mc"]
 
 [ext_resource type="Script" path="res://components/worker/worker.gd" id="1_u5bpl"]
 [ext_resource type="BehaviorTree" uid="uid://c5h5sy0p2u0nk" path="res://components/ai/trees/worker_tree.tres" id="2_tgga0"]
 [ext_resource type="BlackboardPlan" uid="uid://pgm21d643uqk" path="res://components/worker/worker_blackboard.tres" id="3_y7v5w"]
 [ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="4_imatk"]
+[ext_resource type="StyleBox" uid="uid://cc3y63knchcv3" path="res://assets/styles/white_back_blue_borders.tres" id="5_iaxfp"]
 
 [sub_resource type="Gradient" id="Gradient_nc77d"]
 offsets = PackedFloat32Array(0)
@@ -23,7 +24,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 "
 
@@ -62,9 +63,14 @@ colors = PackedColorArray(1, 0.452452, 0.286826, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_b3wje"]
 gradient = SubResource("Gradient_3631r")
 
+[sub_resource type="LabelSettings" id="LabelSettings_v2m15"]
+font_size = 24
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Worker" type="CharacterBody2D" groups=["worker"]]
 motion_mode = 1
-wall_min_slide_angle = 0.523599
+wall_min_slide_angle = 0.785398
 script = ExtResource("1_u5bpl")
 
 [node name="Body" type="Sprite2D" parent="."]
@@ -88,7 +94,7 @@ monitor_performance = true
 script = SubResource("GDScript_06ga6")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-target_desired_distance = 30.0
+target_desired_distance = 35.0
 avoidance_enabled = true
 radius = 30.0
 max_speed = 300.0
@@ -110,6 +116,41 @@ texture = SubResource("GradientTexture2D_b3wje")
 [node name="CoffeeTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Cloud" type="PanelContainer" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -125.0
+offset_top = -156.0
+offset_right = 125.0
+offset_bottom = -24.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("5_iaxfp")
+
+[node name="Label" type="Label" parent="Control/Cloud"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "placeholder"
+label_settings = SubResource("LabelSettings_v2m15")
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [connection signal="body_entered" from="Body/VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_entered"]
 [connection signal="body_exited" from="Body/VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_exited"]

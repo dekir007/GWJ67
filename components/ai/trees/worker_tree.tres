@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=68 format=3 uid="uid://c5h5sy0p2u0nk"]
+[gd_resource type="BehaviorTree" load_steps=72 format=3 uid="uid://c5h5sy0p2u0nk"]
 
 [ext_resource type="Script" path="res://components/ai/tasks/get_worker_task.gd" id="1_vry42"]
 [ext_resource type="Script" path="res://components/ai/tasks/DoWork.gd" id="2_dt40x"]
@@ -231,21 +231,26 @@ children = [SubResource("BTAlwaysSucceed_wbaww"), SubResource("BTCheckAgentPrope
 [sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_kg16c"]
 children = [SubResource("BTSequence_3lpln")]
 
+[sub_resource type="BBVariant" id="BBVariant_q1oe0"]
+type = 4
+saved_value = "t"
+resource_name = "t"
+
+[sub_resource type="BBNode" id="BBNode_xhbwt"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_oqi0e"]
+node = SubResource("BBNode_xhbwt")
+method = &"say"
+args = Array[BBVariant]([SubResource("BBVariant_q1oe0")])
+
+[sub_resource type="BTSequence" id="BTSequence_e73nm"]
+children = [SubResource("BTRepeatUntilSuccess_kg16c"), SubResource("BTCallMethod_oqi0e")]
+
 [sub_resource type="BTTimeLimit" id="BTTimeLimit_8wl23"]
 time_limit = 30.0
-children = [SubResource("BTRepeatUntilSuccess_kg16c")]
-
-[sub_resource type="BBVariant" id="BBVariant_vohaj"]
-type = 1
-saved_value = true
-resource_name = "true"
-
-[sub_resource type="BTSetAgentProperty" id="BTSetAgentProperty_mdy5p"]
-property = &"increase_sus"
-value = SubResource("BBVariant_vohaj")
-
-[sub_resource type="BTDelay" id="BTDelay_ktfkb"]
-children = [SubResource("BTSetAgentProperty_mdy5p")]
+children = [SubResource("BTSequence_e73nm")]
 
 [sub_resource type="BTComment" id="BTComment_a5754"]
 custom_name = "if he doesnt play and have coffee - he assigns a task"
@@ -259,9 +264,21 @@ custom_name = "when suspicion = 1 -> game over"
 [sub_resource type="BTComment" id="BTComment_fccnk"]
 custom_name = "if he plays = game over"
 
+[sub_resource type="BBVariant" id="BBVariant_vohaj"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTSetAgentProperty" id="BTSetAgentProperty_mdy5p"]
+property = &"increase_sus"
+value = SubResource("BBVariant_vohaj")
+
+[sub_resource type="BTDelay" id="BTDelay_ktfkb"]
+children = [SubResource("BTSetAgentProperty_mdy5p")]
+
 [sub_resource type="BTSequence" id="BTSequence_16rq6"]
 custom_name = "LookingForBoss"
-children = [SubResource("BTComment_ebqtl"), SubResource("BTSetAgentProperty_xwxyk"), SubResource("BTTimeLimit_8wl23"), SubResource("BTDelay_ktfkb"), SubResource("BTComment_a5754"), SubResource("BTComment_5npj0"), SubResource("BTComment_3e5xr"), SubResource("BTComment_fccnk")]
+children = [SubResource("BTComment_ebqtl"), SubResource("BTSetAgentProperty_xwxyk"), SubResource("BTTimeLimit_8wl23"), SubResource("BTComment_a5754"), SubResource("BTComment_5npj0"), SubResource("BTComment_3e5xr"), SubResource("BTComment_fccnk"), SubResource("BTDelay_ktfkb")]
 
 [sub_resource type="BTSelector" id="BTSelector_g6fpf"]
 custom_name = "When work is done"

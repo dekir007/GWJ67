@@ -29,7 +29,7 @@ func _exit() -> void:
 
 
 # Called each time this task is ticked (aka executed).
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	return SUCCESS if blackboard.get_var(array).size() > 0 else FAILURE
 
 

@@ -12,6 +12,9 @@ extends CharacterBody2D
 @onready var bt_player: BTPlayer = $BTPlayer
 @onready var idle_particles: GPUParticles2D = $IdleParticles
 @onready var work_particles: GPUParticles2D = $WorkParticles
+@onready var cloud: PanelContainer = $Control/Cloud
+@onready var saying: Label = $Control/Cloud/Label
+@onready var body: Sprite2D = $Body
 
 var is_nav : bool = false # because check agent property "nav_agent.is_navigation_finished()" doesnt work
 
@@ -33,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	
 	var dir = global_position.direction_to(nav_agent.get_next_path_position())
 	var ang = dir.angle()
-	rotation = lerp(rotation, ang, 0.2)
+	body.rotation = lerp(body.rotation, ang- PI/2, 0.2) 
 	var vel = dir * speed * delta
 	nav_agent.set_velocity(vel)
 	
@@ -67,6 +70,13 @@ func emit_idle(e:bool):
 
 func emit_work(e:bool):
 	work_particles.emitting = e
+
+func say(text:String):
+	cloud.show()
+	saying.text = "Test test test"
+	await get_tree().create_timer(5).timeout
+	cloud.hide()
+	
 
 func _on_navigation_agent_2d_target_reached() -> void:
 	print("reached ")

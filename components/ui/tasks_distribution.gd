@@ -35,7 +35,7 @@ func upd_workers():
 		_on_worker_selection_item_selected(0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 

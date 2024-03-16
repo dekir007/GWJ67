@@ -11,12 +11,12 @@ var score : int :
 
 var coffee : int :
 	set(val):
-		coffee = val
+		coffee = clamp(val, 0, 100)
 		coffee_changed.emit(coffee)
 
 var suspicion_level : float :
 	set(val):
-		suspicion_level = val
+		suspicion_level = clampf(val, 0, 1)
 		suspicion_changed.emit(suspicion_level)
 
 func _ready() -> void:
