@@ -1,7 +1,8 @@
-[gd_resource type="BehaviorTree" load_steps=40 format=3 uid="uid://c5h5sy0p2u0nk"]
+[gd_resource type="BehaviorTree" load_steps=68 format=3 uid="uid://c5h5sy0p2u0nk"]
 
 [ext_resource type="Script" path="res://components/ai/tasks/get_worker_task.gd" id="1_vry42"]
 [ext_resource type="Script" path="res://components/ai/tasks/DoWork.gd" id="2_dt40x"]
+[ext_resource type="Script" path="res://components/ai/tasks/array_size_gt_zero.gd" id="3_u70pu"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_fkq2v"]
 var/tasks/name = "tasks"
@@ -10,8 +11,8 @@ var/tasks/value = {}
 var/tasks/hint = 0
 var/tasks/hint_string = ""
 var/vending_machines/name = "vending_machines"
-var/vending_machines/type = 5
-var/vending_machines/value = Vector2(1000, 250)
+var/vending_machines/type = 28
+var/vending_machines/value = []
 var/vending_machines/hint = 0
 var/vending_machines/hint_string = ""
 var/sss/name = "sss"
@@ -19,6 +20,10 @@ var/sss/type = 3
 var/sss/value = 0.0
 var/sss/hint = 0
 var/sss/hint_string = "limbo made me do it for saving result"
+var/player/name = "player"
+var/player/type = 24
+var/player/hint = 0
+var/player/hint_string = ""
 
 [sub_resource type="BTWait" id="BTWait_su1u2"]
 
@@ -45,8 +50,26 @@ node = SubResource("BBNode_yo3em")
 method = &"emit_work"
 args = Array[BBVariant]([SubResource("BBVariant_i6uun")])
 
+[sub_resource type="BBVariant" id="BBVariant_7gels"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTSetAgentProperty" id="BTSetAgentProperty_ddkaa"]
+property = &"increase_sus"
+value = SubResource("BBVariant_7gels")
+
 [sub_resource type="BTAction" id="BTAction_rogws"]
 script = ExtResource("2_dt40x")
+
+[sub_resource type="BBVariant" id="BBVariant_e1orw"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTSetAgentProperty" id="BTSetAgentProperty_ugwvc"]
+property = &"increase_sus"
+value = SubResource("BBVariant_e1orw")
 
 [sub_resource type="BBVariant" id="BBVariant_b5f4x"]
 type = 1
@@ -63,7 +86,8 @@ method = &"emit_work"
 args = Array[BBVariant]([SubResource("BBVariant_b5f4x")])
 
 [sub_resource type="BTSequence" id="BTSequence_bredg"]
-children = [SubResource("BTAction_ikpvo"), SubResource("BTComment_c0eix"), SubResource("BTCallMethod_jtv3w"), SubResource("BTAction_rogws"), SubResource("BTCallMethod_phcjo")]
+custom_name = "Work"
+children = [SubResource("BTAction_ikpvo"), SubResource("BTComment_c0eix"), SubResource("BTCallMethod_jtv3w"), SubResource("BTSetAgentProperty_ddkaa"), SubResource("BTAction_rogws"), SubResource("BTSetAgentProperty_ugwvc"), SubResource("BTCallMethod_phcjo")]
 
 [sub_resource type="BTComment" id="BTComment_eln2t"]
 custom_name = "Idle for 5 sec"
@@ -113,14 +137,27 @@ children = [SubResource("BTComment_eln2t"), SubResource("BTSequence_a3lky")]
 duration = 4.0
 children = [SubResource("BTProbability_in5jh")]
 
-[sub_resource type="BTComment" id="BTComment_ujf4a"]
-custom_name = "Go to Vending Machines"
+[sub_resource type="BBVariant" id="BBVariant_e3wlh"]
+type = 1
+saved_value = true
+resource_name = "true"
 
-[sub_resource type="BBVariant" id="BBVariant_jo5de"]
-type = 5
-value_source = 1
-variable = "vending_machines"
-resource_name = "$vending_machines"
+[sub_resource type="BTCheckAgentProperty" id="BTCheckAgentProperty_pf1ng"]
+property = &"want_coffee"
+value = SubResource("BBVariant_e3wlh")
+
+[sub_resource type="BTAction" id="BTAction_hvjye"]
+script = ExtResource("3_u70pu")
+array = "vending_machines"
+
+[sub_resource type="BBVariant" id="BBVariant_jbn6n"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTSetAgentProperty" id="BTSetAgentProperty_26br6"]
+property = &"want_coffee"
+value = SubResource("BBVariant_jbn6n")
 
 [sub_resource type="BBNode" id="BBNode_feaer"]
 saved_value = NodePath(".")
@@ -128,8 +165,7 @@ resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_n7ai6"]
 node = SubResource("BBNode_feaer")
-method = &"move_to"
-args = Array[BBVariant]([SubResource("BBVariant_jo5de")])
+method = &"move_to_vending_machines"
 
 [sub_resource type="BBVariant" id="BBVariant_86oi7"]
 type = 1
@@ -144,18 +180,92 @@ value = SubResource("BBVariant_86oi7")
 children = [SubResource("BTCheckAgentProperty_dmjgs")]
 
 [sub_resource type="BTTimeLimit" id="BTTimeLimit_ydkfj"]
-time_limit = 30.0
+time_limit = 45.0
 children = [SubResource("BTRepeatUntilSuccess_pimuv")]
 
 [sub_resource type="BTRandomWait" id="BTRandomWait_x6p4g"]
 
 [sub_resource type="BTSequence" id="BTSequence_nhjc6"]
 custom_name = "Go to Vending Machines"
-children = [SubResource("BTCallMethod_n7ai6"), SubResource("BTTimeLimit_ydkfj"), SubResource("BTRandomWait_x6p4g")]
+children = [SubResource("BTCheckAgentProperty_pf1ng"), SubResource("BTAction_hvjye"), SubResource("BTSetAgentProperty_26br6"), SubResource("BTCallMethod_n7ai6"), SubResource("BTTimeLimit_ydkfj"), SubResource("BTRandomWait_x6p4g")]
+
+[sub_resource type="BTComment" id="BTComment_ebqtl"]
+custom_name = "Go to boss"
+
+[sub_resource type="BBVariant" id="BBVariant_jl0xi"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTSetAgentProperty" id="BTSetAgentProperty_xwxyk"]
+property = &"increase_sus"
+value = SubResource("BBVariant_jl0xi")
+
+[sub_resource type="BBNode" id="BBNode_8mekc"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_ipgym"]
+node = SubResource("BBNode_8mekc")
+method = &"move_to_player"
+
+[sub_resource type="BTCooldown" id="BTCooldown_aacfb"]
+duration = 0.5
+children = [SubResource("BTCallMethod_ipgym")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_wbaww"]
+children = [SubResource("BTCooldown_aacfb")]
+
+[sub_resource type="BBVariant" id="BBVariant_aisxy"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTCheckAgentProperty" id="BTCheckAgentProperty_2r6nq"]
+property = &"is_nav"
+value = SubResource("BBVariant_aisxy")
+
+[sub_resource type="BTSequence" id="BTSequence_3lpln"]
+children = [SubResource("BTAlwaysSucceed_wbaww"), SubResource("BTCheckAgentProperty_2r6nq")]
+
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_kg16c"]
+children = [SubResource("BTSequence_3lpln")]
+
+[sub_resource type="BTTimeLimit" id="BTTimeLimit_8wl23"]
+time_limit = 30.0
+children = [SubResource("BTRepeatUntilSuccess_kg16c")]
+
+[sub_resource type="BBVariant" id="BBVariant_vohaj"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTSetAgentProperty" id="BTSetAgentProperty_mdy5p"]
+property = &"increase_sus"
+value = SubResource("BBVariant_vohaj")
+
+[sub_resource type="BTDelay" id="BTDelay_ktfkb"]
+children = [SubResource("BTSetAgentProperty_mdy5p")]
+
+[sub_resource type="BTComment" id="BTComment_a5754"]
+custom_name = "if he doesnt play and have coffee - he assigns a task"
+
+[sub_resource type="BTComment" id="BTComment_5npj0"]
+custom_name = "or +0.3 suspicion"
+
+[sub_resource type="BTComment" id="BTComment_3e5xr"]
+custom_name = "when suspicion = 1 -> game over"
+
+[sub_resource type="BTComment" id="BTComment_fccnk"]
+custom_name = "if he plays = game over"
+
+[sub_resource type="BTSequence" id="BTSequence_16rq6"]
+custom_name = "LookingForBoss"
+children = [SubResource("BTComment_ebqtl"), SubResource("BTSetAgentProperty_xwxyk"), SubResource("BTTimeLimit_8wl23"), SubResource("BTDelay_ktfkb"), SubResource("BTComment_a5754"), SubResource("BTComment_5npj0"), SubResource("BTComment_3e5xr"), SubResource("BTComment_fccnk")]
 
 [sub_resource type="BTSelector" id="BTSelector_g6fpf"]
 custom_name = "When work is done"
-children = [SubResource("BTCooldown_ecymx"), SubResource("BTComment_ujf4a"), SubResource("BTSequence_nhjc6")]
+children = [SubResource("BTCooldown_ecymx"), SubResource("BTSequence_nhjc6"), SubResource("BTSequence_16rq6")]
 
 [sub_resource type="BTSelector" id="BTSelector_jhpqw"]
 children = [SubResource("BTRunLimit_fkahk"), SubResource("BTSequence_bredg"), SubResource("BTSelector_g6fpf")]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://baqto3jnkd6mc"]
+[gd_scene load_steps=15 format=3 uid="uid://baqto3jnkd6mc"]
 
 [ext_resource type="Script" path="res://components/worker/worker.gd" id="1_u5bpl"]
 [ext_resource type="BehaviorTree" uid="uid://c5h5sy0p2u0nk" path="res://components/ai/trees/worker_tree.tres" id="2_tgga0"]
 [ext_resource type="BlackboardPlan" uid="uid://pgm21d643uqk" path="res://components/worker/worker_blackboard.tres" id="3_y7v5w"]
+[ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="4_imatk"]
 
 [sub_resource type="Gradient" id="Gradient_nc77d"]
 offsets = PackedFloat32Array(0)
@@ -27,7 +28,7 @@ func _process(delta: float) -> void:
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5sxs6"]
-radius = 33.0
+radius = 29.0689
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xwu5j"]
 particle_flag_disable_z = true
@@ -62,12 +63,23 @@ colors = PackedColorArray(1, 0.452452, 0.286826, 1)
 gradient = SubResource("Gradient_3631r")
 
 [node name="Worker" type="CharacterBody2D" groups=["worker"]]
+motion_mode = 1
+wall_min_slide_angle = 0.523599
 script = ExtResource("1_u5bpl")
 
 [node name="Body" type="Sprite2D" parent="."]
-position = Vector2(2, 3.8147e-06)
+rotation = -1.57079
 scale = Vector2(0.226563, 57.5)
 texture = SubResource("GradientTexture1D_on31x")
+
+[node name="VisionCone2D" parent="Body" instance=ExtResource("4_imatk")]
+scale = Vector2(4.41378, 0.0173913)
+angle_deg = 45
+ray_count = 50
+collision_layer_mask = 3
+
+[node name="VisionConeArea" parent="Body/VisionCone2D" index="1"]
+collision_mask = 2
 
 [node name="BTPlayer" type="BTPlayer" parent="."]
 behavior_tree = ExtResource("2_tgga0")
@@ -76,9 +88,9 @@ monitor_performance = true
 script = SubResource("GDScript_06ga6")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-target_desired_distance = 25.0
+target_desired_distance = 30.0
 avoidance_enabled = true
-radius = 45.0
+radius = 30.0
 max_speed = 300.0
 debug_enabled = true
 
@@ -95,5 +107,14 @@ emitting = false
 process_material = SubResource("ParticleProcessMaterial_72bkl")
 texture = SubResource("GradientTexture2D_b3wje")
 
+[node name="CoffeeTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="body_entered" from="Body/VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_entered"]
+[connection signal="body_exited" from="Body/VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_exited"]
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="timeout" from="CoffeeTimer" to="." method="_on_coffee_timer_timeout"]
+
+[editable path="Body/VisionCone2D"]

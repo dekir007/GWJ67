@@ -66,6 +66,10 @@ shift={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_2="player"
+
 [limbo_ai]
 
 behavior_tree/behavior_tree_default_dir="res://components/ai/trees"

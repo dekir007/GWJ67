@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://besktflw837bk"]
+
+[ext_resource type="Script" path="res://components/props/vending_machine.gd" id="1_22rmo"]
+
+[sub_resource type="Gradient" id="Gradient_24nux"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.811539, 0.988666, 1.54018e-06, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uowjd"]
+gradient = SubResource("Gradient_24nux")
+fill_to = Vector2(1, 1)
+
+[node name="VendingMachine" type="StaticBody2D"]
+scale = Vector2(3.71875, 4.125)
+script = ExtResource("1_22rmo")
+
+[node name="VendingMachine" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_uowjd")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-45.4454, 1.49012e-08)

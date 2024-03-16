@@ -7,6 +7,7 @@ enum TaskTypes { FillOutPapers, ProjectPlanning, OfficeErrands, TeamMeeting }
 @export var duration : float
 @export var cost : float
 
-var name : 
+# godot needs export or else spams with errors
+@export var name : String : 
 	get:
 		return TaskTypes.keys()[type]

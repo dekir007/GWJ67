@@ -21,3 +21,7 @@ var/sss/type = 3
 var/sss/value = 0.0
 var/sss/hint = 0
 var/sss/hint_string = "limbo made me do it for saving result"
+var/player/name = "player"
+var/player/type = 24
+var/player/hint = 0
+var/player/hint_string = ""
