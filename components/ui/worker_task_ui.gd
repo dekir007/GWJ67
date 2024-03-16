@@ -17,7 +17,7 @@ func _ready() -> void:
 	#var names = WorkTask.TaskTypes.keys()
 	header.text = task.name#names[task.type]
 	duration.text = "Takes time: " + str(task.duration) + " seconds"
-	cost.text = "Costs : " + str(task.cost) + " of a cup of coffee"
+	cost.text = "Costs : " + str(task.cost*100) + "% of a cup of coffee"
 	
 	#worker_selection.clear()
 	#var workers = get_tree().get_nodes_in_group("worker")
@@ -27,5 +27,9 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _on_assign_button_up() -> void:
-	assigned.emit(task)
+	if Global.coffee >= task.cost * 100:
+		Global.coffee -= task.cost * 100
+		Global.score += task.cost * 100
+		assigned.emit(task)
+	
 	pass # Replace with function body.
